@@ -1,1 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@100..900&display=swap');
+*{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+}
+
+:root{
+    --cor-padrão:#4f6415;
+    --cor-padrão-hover:rgba(83, 39, 3, 0.849);
+    --cor-fonte:#fff;
+    --cor-fonte-p:#555;
+    --cor-btn:rgb(3, 53, 6);
+}
