@@ -21,3 +21,26 @@ body{
     font-family: 'Lexend-Giga', sans-serif;
 
 }
+
+.banner{
+    background: radial-gradient(var(--cor-padrão-hover) var(--cor-padrão));
+}
+
+.banner .linha{
+    margin-top: 70px;
+}
+
+.container{
+    max-width: 1300px;
+    margin: auto;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+.navbar{
+    display: flex;
+    align-items: center;
+    padding: 20px;
+}
+
+nav{}
