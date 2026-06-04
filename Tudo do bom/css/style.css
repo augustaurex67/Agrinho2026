@@ -62,3 +62,18 @@ nav ul li a{
     text-decoration: none;
     color: var(--cor-fonte);
 }
+
+.banner p{
+    color: var(--cor-fonte);
+}
+
+p{
+    color: var(--cor-fonte-p)
+}
+
+.linha{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
