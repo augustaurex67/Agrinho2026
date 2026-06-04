@@ -11,4 +11,13 @@
     --cor-fonte:#fff;
     --cor-fonte-p:#555;
     --cor-btn:rgb(3, 53, 6);
+    --cor-btn-hover:rgb(19, 109, 25);
+    --cor-btn-fonte:#000;
+    --cor-fonte-corpo:#555;
+    --cor-fonte-corpo-leve:#777;
+}
+
+body{
+    font-family: 'Lexend-Giga', sans-serif;
+
 }
