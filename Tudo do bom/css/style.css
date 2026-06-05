@@ -11,7 +11,7 @@
     --cor-fonte:#fff;
     --cor-fonte-p:#555;
     --cor-btn:rgb(58, 126, 63);
-    --cor-btn-hover:rgb(19, 109, 25);
+    --cor-btn-hover:rgb(83, 255, 3);
     --cor-btn-fonte:#000;
     --cor-fonte-corpo:#555;
     --cor-fonte-corpo-leve:#777;
@@ -106,4 +106,9 @@ p{
     padding: 8px 30px;
     margin: 30px 0;
     border-radius: 30px;
+}
+
+.btn:hover{
+    background: var(--cor-btn-hover);
+    color: var(--cor-btn-fonte);
 }
