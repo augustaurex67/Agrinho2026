@@ -87,3 +87,14 @@ p{
     max-width: 100%;
     padding: 50px 0;
 }
+
+.col-2 h1{
+    font-size: 50px;
+    line-height: 60px;
+    margin: 25px 0;
+}
+
+.col-2 p{
+    font-weight: 600;
+    color:var(--cor-btn-fonte);
+}
