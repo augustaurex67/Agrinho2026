@@ -6,15 +6,15 @@
 }
 
 :root{
-    --cor-padrão:#4f6415;
-    --cor-padrão-hover:rgba(113, 194, 8, 0.849);
-    --cor-fonte:#fff;
-    --cor-fonte-p:#555;
-    --cor-btn:rgb(58, 126, 63);
-    --cor-btn-hover:rgb(83, 255, 3);
-    --cor-btn-fonte:#000;
-    --cor-fonte-corpo:#555;
-    --cor-fonte-corpo-leve:#777;
+    --cor-padrão:#2E7D32;
+    --cor-padrão-hover:#388E3C;
+    --cor-fonte:#1F2937;
+    --cor-fonte-p:#4B5563;
+    --cor-btn:#F59E0B;
+    --cor-btn-hover:#D97706;
+    --cor-btn-fonte:#FFFFFF;
+    --cor-fonte-corpo:#374151;
+    --cor-fonte-corpo-leve:#9CA3AF;
 }
 
 body{
@@ -106,6 +106,7 @@ p{
     padding: 8px 30px;
     margin: 30px 0;
     border-radius: 30px;
+    transition: background 0.5s;
 }
 
 .btn:hover{
