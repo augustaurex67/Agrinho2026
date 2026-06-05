@@ -23,7 +23,7 @@ body{
 }
 
 .banner{
-    background: linear-gradient(to bottom, var(--cor-padrão-hover), var(--cor-padrão));
+    background: radial-gradient(var(--cor-padrão-hover), var(--cor-padrão));
 }
 
 .banner .linha{
