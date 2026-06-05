@@ -18,12 +18,12 @@
 }
 
 body{
-    font-family: 'Lexend-Giga', sans-serif;
+    font-family: 'Lexend Giga', sans-serif;
 
 }
 
 .banner{
-    background-color: radial-gradient(var(--cor-padrão-hover), var(--cor-padrão));
+    background: radial-gradient(var(--cor-padrão-hover), var(--cor-padrão));
 }
 
 .banner .linha{
