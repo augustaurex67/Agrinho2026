@@ -1,215 +1,365 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AgroHorizonte</title>
-    <link rel="stylesheet" href="Tudo do bom/css/style.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AgroFood - Compre direto do campo</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+  :root {
+    --verde-escuro:#2e5d32;
+    --verde:#4caf50;
+    --verde-claro:#a5d6a7;
+    --terra:#8d6e63;
+    --creme:#f5f5dc;
+    --amarelo:#fdd835;
+    --texto:#2c2c2c;
+  }
+  body { background: var(--creme); color: var(--texto); min-height:100vh; }
+  header {
+    background: linear-gradient(90deg, var(--verde-escuro), var(--verde));
+    color:#fff; padding:14px 24px; display:flex; align-items:center; justify-content:space-between;
+    box-shadow:0 4px 12px rgba(0,0,0,.15); position:sticky; top:0; z-index:50;
+  }
+  .logo { font-size:1.6rem; font-weight:800; letter-spacing:.5px; display:flex; align-items:center; gap:8px; }
+  .logo span { font-size:1.8rem; }
+  nav { display:flex; gap:10px; flex-wrap:wrap; }
+  .nav-btn {
+    background: rgba(255,255,255,.12); color:#fff; border:2px solid rgba(255,255,255,.3);
+    padding:9px 18px; border-radius:30px; cursor:pointer; font-weight:600; font-size:.95rem;
+    transition: all .3s ease; position:relative; overflow:hidden;
+  }
+  .nav-btn::before {
+    content:''; position:absolute; top:50%; left:50%; width:0; height:0;
+    background: var(--amarelo); border-radius:50%;
+    transform: translate(-50%,-50%); transition: width .5s ease, height .5s ease;
+    z-index:-1;
+  }
+  .nav-btn:hover { color:var(--verde-escuro); transform: translateY(-3px); box-shadow:0 6px 16px rgba(0,0,0,.25); border-color: var(--amarelo);}
+  .nav-btn:hover::before { width:300px; height:300px; }
+  .nav-btn.active { background: var(--amarelo); color:var(--verde-escuro); border-color: var(--amarelo); }
+  .cart-btn {
+    background: var(--amarelo); color: var(--verde-escuro); border:none; padding:9px 16px;
+    border-radius:30px; font-weight:800; cursor:pointer; display:flex; align-items:center; gap:6px;
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .cart-btn:hover { transform: scale(1.08); box-shadow:0 6px 14px rgba(0,0,0,.25); }
+  .cart-count { background: var(--verde-escuro); color:#fff; border-radius:50%; padding:2px 8px; font-size:.8rem; }
+  main { padding:24px; max-width:1200px; margin:0 auto; }
+  .page { display:none; animation: fade .4s ease; }
+  .page.active { display:block; }
+  @keyframes fade { from{opacity:0; transform: translateY(10px);} to{opacity:1; transform:none;} }
+  .hero {
+    background: linear-gradient(135deg, var(--verde-escuro), var(--verde));
+    color:#fff; padding:40px; border-radius:18px; margin-bottom:24px; text-align:center;
+    box-shadow:0 8px 24px rgba(0,0,0,.15);
+  }
+  .hero h1 { font-size:2.4rem; margin-bottom:10px; }
+  .hero p { font-size:1.1rem; opacity:.95; }
+  .search-bar {
+    display:flex; gap:10px; margin-bottom:20px; background:#fff; padding:8px; border-radius:30px;
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+  }
+  .search-bar input {
+    flex:1; border:none; outline:none; padding:10px 16px; font-size:1rem; border-radius:25px;
+  }
+  .search-bar button {
+    background: var(--verde); color:#fff; border:none; padding:10px 22px; border-radius:25px;
+    font-weight:700; cursor:pointer; transition: background .2s;
+  }
+  .search-bar button:hover { background: var(--verde-escuro); }
+  .categorias { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:24px; }
+  .cat-btn {
+    background:#fff; color:var(--verde-escuro); border:2px solid var(--verde-claro);
+    padding:8px 18px; border-radius:20px; cursor:pointer; font-weight:600;
+    transition: all .25s ease;
+  }
+  .cat-btn:hover { background: var(--verde-claro); transform: translateY(-2px); }
+  .cat-btn.active { background: var(--verde-escuro); color:#fff; border-color: var(--verde-escuro);}
+  .grid {
+    display:grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); gap:18px;
+  }
+  .card {
+    background:#fff; border-radius:14px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,.08);
+    transition: transform .25s ease, box-shadow .25s ease; display:flex; flex-direction:column;
+  }
+  .card:hover { transform: translateY(-6px); box-shadow:0 12px 24px rgba(0,0,0,.15); }
+  .card img { width:100%; height:160px; object-fit:cover; }
+  .card-body { padding:14px; flex:1; display:flex; flex-direction:column; }
+  .card-body h3 { font-size:1.05rem; color:var(--verde-escuro); margin-bottom:4px; }
+  .card-body .cat { font-size:.8rem; color:var(--terra); margin-bottom:8px; }
+  .price { font-size:1.2rem; font-weight:800; color:var(--verde-escuro); margin-top:auto; margin-bottom:10px; }
+  .add-btn {
+    background: var(--verde); color:#fff; border:none; padding:10px; border-radius:8px;
+    cursor:pointer; font-weight:700; transition: all .25s ease; position:relative; overflow:hidden;
+  }
+  .add-btn:hover { background: var(--verde-escuro); transform: scale(1.03); letter-spacing:1px; }
+  /* Cart drawer */
+  .cart-drawer {
+    position:fixed; top:0; right:-420px; width:380px; max-width:100%; height:100vh;
+    background:#fff; box-shadow:-6px 0 20px rgba(0,0,0,.2); padding:20px; transition: right .35s ease;
+    z-index:100; display:flex; flex-direction:column;
+  }
+  .cart-drawer.open { right:0; }
+  .cart-drawer h2 { color:var(--verde-escuro); margin-bottom:14px; }
+  .cart-items { flex:1; overflow-y:auto; }
+  .cart-item { display:flex; gap:10px; padding:10px 0; border-bottom:1px solid #eee; align-items:center; }
+  .cart-item img { width:50px; height:50px; object-fit:cover; border-radius:6px; }
+  .cart-item .info { flex:1; font-size:.9rem; }
+  .cart-item button { background:#e53935; color:#fff; border:none; padding:5px 9px; border-radius:6px; cursor:pointer; }
+  .qty-ctrl { display:flex; align-items:center; gap:6px; margin-top:4px; }
+  .qty-ctrl button { background: var(--verde-claro); color: var(--verde-escuro); padding:2px 8px; }
+  .cart-total { font-size:1.3rem; font-weight:800; color:var(--verde-escuro); margin:16px 0; text-align:right; }
+  .checkout-btn {
+    background: var(--amarelo); color: var(--verde-escuro); border:none; padding:14px; border-radius:10px;
+    font-weight:800; font-size:1.05rem; cursor:pointer; transition: all .25s ease;
+  }
+  .checkout-btn:hover { background: var(--verde-escuro); color:#fff; transform: scale(1.02); }
+  .close-cart { position:absolute; top:14px; right:14px; background:none; border:none; font-size:1.5rem; cursor:pointer; color:var(--verde-escuro); }
+  .overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.4); z-index:99; }
+  .overlay.show { display:block; }
+  /* Impresa / Contato */
+  .info-box { background:#fff; padding:30px; border-radius:14px; box-shadow:0 4px 12px rgba(0,0,0,.08); }
+  .info-box h2 { color:var(--verde-escuro); margin-bottom:14px; }
+  .info-box p { margin-bottom:12px; line-height:1.7; }
+  .contato-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap:16px; margin-top:20px; }
+  .contato-card { background: var(--verde-claro); padding:18px; border-radius:12px; }
+  .contato-card strong { color: var(--verde-escuro); display:block; margin-bottom:4px; }
+  /* Modal sucesso */
+  .modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:200; align-items:center; justify-content:center; }
+  .modal.show { display:flex; animation: fade .3s ease; }
+  .modal-content { background:#fff; padding:30px; border-radius:14px; text-align:center; max-width:400px; }
+  .modal-content h2 { color:var(--verde-escuro); margin-bottom:10px; }
+  .modal-content button { margin-top:14px; background:var(--verde); color:#fff; border:none; padding:10px 22px; border-radius:8px; cursor:pointer; font-weight:700; }
+  footer { text-align:center; padding:20px; color:var(--terra); margin-top:30px; }
+  @media (max-width:700px){
+    header { flex-direction:column; gap:10px; }
+    .hero h1 { font-size:1.6rem; }
+  }
+</style>
 </head>
-
 <body>
-    <!--Começo banner do site-->
-    <div class="banner">
-
-        <!--Começo do container do site-->
-        <div class="container">
-
-                <!--Começo topo de navegação do site-->
-                <div class="navbar">
-
-
-                    <div class="logo">
-                        <img src="Tudo do bom/img/Logo.png" alt="AgroHorizonte" width="125px">
-                    </div>
-
-                    <!--Começo menu de navegação-->
-                    <nav>
-                        <ul id="MenuItens">
-                            <li><a href="" title="">Inicio</a></li>
-                            <li><a href="" title="">Produtos</a></li>
-                            <li><a href="" title="">Empresa</a></li>
-                            <li><a href="" title="">Contatos</a></li>
-                        </ul>
-                    </nav>
-                    <!--Fim menu de navegação topo-->
-
-                    <img src="Tudo do bom/img/Carrinho.png" alt="" width="30px" height="30px"> 
-
-                </div>
-                <!--Fim topo de navegação do site-->
-
-                <!--Começo do Texto do banner-->
-                <div class="linha">
-                    
-                    <div class="col-2">
-                        <h1>O mundo agro <br>só começa por aqui!</h1>
-                        <p>Compre qualquer tipo de produtos de maior qualidade do agronegócio</p>
-                        <br><a href="" class="btn">&#8594; Veja alguns de nossos produtos &#8592;</a>
-                    </div>
-                    <div class="col-2">
-                        <img src="Tudo do bom/img/sla.png" alt="width=700px" height="800px">
-                    </div>
-
-
-                </div>
-                <!--Fim do Texto do banner-->
-
-
-        </div>
-        <!--Fim do container do site-->
+<header>
+  <div class="logo"><span>🌱</span> AgroFood</div>
+  <nav>
+    <button class="nav-btn active" data-page="inicial">Inicial</button>
+    <button class="nav-btn" data-page="impresa">Impresa</button>
+    <button class="nav-btn" data-page="produtos">Produtos</button>
+    <button class="nav-btn" data-page="contatos">Contatos</button>
+  </nav>
+  <button class="cart-btn" onclick="toggleCart()">🛒 Carrinho <span class="cart-count" id="cartCount">0</span></button>
+</header>
+<main>
+  <!-- INICIAL -->
+  <section class="page active" id="page-inicial">
+    <div class="hero">
+      <h1>🌾 Direto do campo até a sua casa</h1>
+      <p>Produtos agrícolas frescos, preço justo e entrega rápida.</p>
     </div>
-    <!--Fim banner do site-->
-
-    <!--Começo categorias em destaque do site-->
-    <div class="categorias"> 
-
-        <!--Começo corpo categorias em destaque-->
-
-            <div class="corpo-categorias">
-
-                <!--Começo linha do corpo categorias em destaque-->
-                <div class="linha">
-
-                    <div class="col-3">
-                        <img src="Tudo do bom/img/Fertilizante.png" alt="">
-                    </div>
-
-                    <div class="col-3">
-                        <img src="Tudo do bom/img/Sementes.png" alt="">
-                    </div>
-
-                    <div class="col-3">
-                        <img src="Tudo do bom/img/terra" alt="">
-                    </div>
-                    
-                </div>
-
-                <!--Fim linha do corpo categorias em destaque-->
-
-            </div>
-        <!--Fim corpo categorias em destaque-->
-
-            
-
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Pesquisar produto..." />
+      <button onclick="goToProdutos()">Buscar</button>
     </div>
-
-    <!--Fim categorias em destaque do site-->
-
-    <!--Começo produtos em destaque-->
-
-        <div class="corpo-categorias">
-            <h2 class="Título">Produtos em destaque</h2>
-
-            <!--Começo linha do produto-->
-
-            <div class="linha">
-                <!--Começo itens produtos em destaque-->
-                <div class="col-4">
-                    <img src="Tudo do bom/img/Fertilizante.png" alt="">
-                    <h4>Fertilizante</h4>
-                    <div class="clasificacao">
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                    </div>
-                    <p>R$ 89,90</p>
-                </div>
-                <!--Fim itens produtos em destaque-->
-
-                <!--Começo itens produtos em destaque-->
-                <div class="col-4">
-                    <img src="Tudo do bom/img/Fertilizante.png" alt="">
-                    <h4>Sementes</h4>
-                    <div class="clasificacao">
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                    </div>
-                    <p>R$ 10,99</p>
-                </div>
-                <!--Fim itens produtos em destaque-->
-
-                <!--Começo itens produtos em destaque-->
-                <div class="col-4">
-                    <img src="Tudo do bom/img/Fertilizante.png" alt="">
-                    <h4>Curso Cobranças</h4>
-                    <div class="clasificacao">
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                    </div>
-                    <p>R$ 997,90</p>
-                </div>
-                <!--Fim itens produtos em destaque-->
-
-            </div>
-            <!--Fim linha do produto-->
-
-            <h2 class="Título">Outros produtos</h2>
-
-             <div class="linha">
-                <!--Começo itens produtos em destaque-->
-                <div class="col-4">
-                    <img src="Tudo do bom/img/Fertilizante.png" alt="">
-                    <h4>Curso Cobranças</h4>
-                    <div class="clasificacao">
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                    </div>
-                    <p>R$ 997,90</p>
-                </div>
-                <!--Fim itens produtos em destaque-->
-
-                <!--Começo itens produtos em destaque-->
-                <div class="col-4">
-                    <img src="Tudo do bom/img/Fertilizante.png" alt="">
-                    <h4>Curso Cobranças</h4>
-                    <div class="clasificacao">
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                    </div>
-                    <p>R$ 997,90</p>
-                </div>
-                <!--Fim itens produtos em destaque-->
-
-                <!--Começo itens produtos em destaque-->
-                <div class="col-4">
-                    <img src="Tudo do bom/img/Fertilizante.png" alt="">
-                    <h4>Curso Cobranças</h4>
-                    <div class="clasificacao">
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                    </div>
-                    <p>R$ 997,90</p>
-                </div>
-                <!--Fim itens produtos em destaque-->
-
-            </div>
-
-
+    <h2 style="color:var(--verde-escuro); margin-bottom:14px;">⭐ Destaques</h2>
+    <div class="grid" id="destaques"></div>
+  </section>
+  <!-- IMPRESA -->
+  <section class="page" id="page-impresa">
+    <div class="info-box">
+      <h2>🌱 Sobre a AgroFood</h2>
+      <p>A <strong>AgroFood</strong> nasceu da vontade de aproximar o produtor rural do consumidor final, eliminando intermediários e oferecendo produtos mais frescos a preços mais justos.</p>
+      <p>Inspirada nos modelos de delivery modernos, nossa missão é levar a riqueza do campo brasileiro à mesa de cada família com praticidade, qualidade e sustentabilidade.</p>
+      <p>Trabalhamos com pequenos e médios agricultores de diversas regiões, garantindo renda justa para quem planta e produtos saudáveis para quem consome.</p>
+      <p><strong>Por que existimos?</strong> Porque acreditamos que comer bem é um direito, e que valorizar quem produz é o caminho para um futuro mais saudável e sustentável.</p>
+    </div>
+  </section>
+  <!-- PRODUTOS -->
+  <section class="page" id="page-produtos">
+    <div class="search-bar">
+      <input type="text" id="searchInput2" placeholder="Pesquisar produto..." oninput="renderProducts()" />
+      <button onclick="renderProducts()">Buscar</button>
+    </div>
+    <div class="categorias" id="categorias"></div>
+    <div class="grid" id="produtos"></div>
+  </section>
+  <!-- CONTATOS -->
+  <section class="page" id="page-contatos">
+    <div class="info-box">
+      <h2>📞 Fale com a gente</h2>
+      <p>Estamos sempre prontos para ouvir você. Entre em contato pelos canais abaixo:</p>
+      <div class="contato-grid">
+        <div class="contato-card"><strong>📧 Email</strong>contato@agrofood.com.br</div>
+        <div class="contato-card"><strong>📱 Celular / WhatsApp</strong>(44) 98408-7194</div>
+        <div class="contato-card"><strong>📍 Endereço</strong>Plantações plantásticas Xique-Xique</div>
+        <div class="contato-card"><strong>🕐 Atendimento</strong>Seg a Sáb · 8h às 20h</div>
+        <div class="contato-card"><strong>📷 Instagram</strong>@agrofood.oficial</div>
+      </div>
+    </div>
+  </section>
+</main>
+<!-- Cart drawer -->
+<div class="overlay" id="overlay" onclick="toggleCart()"></div>
+<aside class="cart-drawer" id="cartDrawer">
+  <button class="close-cart" onclick="toggleCart()">✕</button>
+  <h2>🛒 Seu carrinho</h2>
+  <div class="cart-items" id="cartItems"><p style="color:#888;">Carrinho vazio.</p></div>
+  <div class="cart-total" id="cartTotal">Total: R$ 0,00</div>
+  <button class="checkout-btn" onclick="finalizarCompra()">Finalizar compra</button>
+</aside>
+<!-- Modal -->
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <h2 id="modalTitle">✅ Compra realizada!</h2>
+    <p id="modalText">Obrigado por comprar na AgroFood. Seu pedido foi recebido com sucesso.</p>
+    <button onclick="fecharModal()">OK</button>
+  </div>
+</div>
+<footer>© 2026 AgroFood · Do campo para sua mesa 🌾</footer>
+<script>
+const produtos = [
+  { id:1, nome:"Tomate", cat:"Legumes", preco:8.90, img:"https://images.unsplash.com/photo-1546470427-e26264be0b0d?w=400" },
+  { id:2, nome:"Alface Crespa", cat:"Verduras", preco:4.50, img:"https://images.unsplash.com/photo-1622206151226-18ca2c9ab4a1?w=400" },
+  { id:3, nome:"Cenoura", cat:"Legumes", preco:5.20, img:"https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=400" },
+  { id:4, nome:"Batata", cat:"Legumes", preco:6.80, img:"https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=400" },
+  { id:5, nome:"Cebola", cat:"Legumes", preco:5.90, img:"https://images.unsplash.com/photo-1580201092675-a0a6a6cafbb1?w=400" },
+  { id:6, nome:"Maçã", cat:"Frutas", preco:9.50, img:"https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=400" },
+  { id:7, nome:"Banana Prata", cat:"Frutas", preco:6.20, img:"https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=400" },
+  { id:8, nome:"Laranja Pera", cat:"Frutas", preco:4.80, img:"https://images.unsplash.com/photo-1547514701-42782101795e?w=400" },
+  { id:9, nome:"Mamão Papaya", cat:"Frutas", preco:7.40, img:"https://images.unsplash.com/photo-1617112848923-cc2234396a8d?w=400" },
+  { id:10, nome:"Abacate", cat:"Frutas", preco:8.20, img:"https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=400" },
+  { id:11, nome:"Arroz 5kg", cat:"Grãos", preco:28.90, img:"https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400" },
+  { id:12, nome:"Feijão Carioca 1kg", cat:"Grãos", preco:9.90, img:"https://images.unsplash.com/photo-1622467827417-bbe2237067a9?w=400" },
+  { id:13, nome:"Milho em Espiga", cat:"Grãos", preco:3.50, img:"https://images.unsplash.com/photo-1601593768799-76d3ec0d29b5?w=400" },
+  { id:14, nome:"Café Torrado 500g", cat:"Grãos", preco:22.00, img:"https://images.unsplash.com/photo-1559525839-d9acfd5d2e90?w=400" },
+  { id:15, nome:"Leite Integral 1L", cat:"Laticínios", preco:5.80, img:"https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400" },
+  { id:16, nome:"Queijo Minas", cat:"Laticínios", preco:32.00, img:"https://images.unsplash.com/photo-1452195100486-9cc805987862?w=400" },
+  { id:17, nome:"Ovos Caipira (dz)", cat:"Laticínios", preco:18.50, img:"https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?w=400" },
+  { id:18, nome:"Mel Puro 500g", cat:"Naturais", preco:35.00, img:"https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=400" },
+  { id:19, nome:"Manga Tommy", cat:"Frutas", preco:6.90, img:"https://images.unsplash.com/photo-1605027990121-cbae9e0642db?w=400" },
+  { id:20, nome:"Brócolis", cat:"Verduras", preco:7.50, img:"https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?w=400" },
+];
+const carrinho = {};
+let categoriaAtiva = "Todas";
+function categorias(){ return ["Todas", ...new Set(produtos.map(p=>p.cat))]; }
+function renderCategorias(){
+  const el = document.getElementById("categorias");
+  el.innerHTML = categorias().map(c=>`<button class="cat-btn ${c===categoriaAtiva?'active':''}" onclick="setCat('${c}')">${c}</button>`).join("");
+}
+function setCat(c){ categoriaAtiva = c; renderCategorias(); renderProducts(); }
+function renderProducts(){
+  const termo = (document.getElementById("searchInput2")?.value || "").toLowerCase();
+  const lista = produtos.filter(p => (categoriaAtiva==="Todas"||p.cat===categoriaAtiva) && p.nome.toLowerCase().includes(termo));
+  document.getElementById("produtos").innerHTML = lista.length ? lista.map(cardHTML).join("") : '<p style="color:#888;">Nenhum produto encontrado.</p>';
+}
+function cardHTML(p){
+  return `<div class="card">
+    <img src="${p.img}" alt="${p.nome}" onerror="this.src='https://via.placeholder.com/300x200/4caf50/ffffff?text=${encodeURIComponent(p.nome)}'"/>
+    <div class="card-body">
+      <h3>${p.nome}</h3>
+      <div class="cat">${p.cat}</div>
+      <div class="price">R$ ${p.preco.toFixed(2).replace('.',',')}/kg</div>
+      <button class="add-btn" onclick="addCart(${p.id})">+ Adicionar</button>
+    </div>
+  </div>`;
+}
+function renderDestaques(){
+  const destaques = produtos.slice(0,8);
+  document.getElementById("destaques").innerHTML = destaques.map(cardHTML).join("");
+}
+function addCart(id){
+  carrinho[id] = (carrinho[id]||0) + 1;
+  atualizarCart();
+  const drawer = document.getElementById("cartDrawer");
+  drawer.style.transform = "scale(1.02)";
+  setTimeout(()=>drawer.style.transform="",200);
+}
+function removeCart(id){ delete carrinho[id]; atualizarCart(); }
+function changeQty(id,d){ carrinho[id]=Math.max(0,(carrinho[id]||0)+d); if(!carrinho[id]) delete carrinho[id]; atualizarCart(); }
+function atualizarCart(){
+  const ids = Object.keys(carrinho);
+  document.getElementById("cartCount").textContent = ids.reduce((s,id)=>s+carrinho[id],0);
+  const cont = document.getElementById("cartItems");
+  if(!ids.length){ cont.innerHTML='<p style="color:#888;">Carrinho vazio.</p>'; document.getElementById("cartTotal").textContent="Total: R$ 0,00"; return; }
+  let total = 0;
+  cont.innerHTML = ids.map(id=>{
+    const p = produtos.find(x=>x.id==id); const q = carrinho[id]; total += p.preco*q;
+    return `<div class="cart-item">
+      <img src="${p.img}" onerror="this.src='https://via.placeholder.com/50'"/>
+      <div class="info">
+        <strong>${p.nome}</strong><br/>
+        R$ ${p.preco.toFixed(2).replace('.',',')}
+        <div class="qty-ctrl">
+          <button onclick="changeQty(${id},-1)">−</button>
+          <span>${q}</span>
+          <button onclick="changeQty(${id},1)">+</button>
         </div>
-
-    <!--Fim produtos em destaque-->
-
-
-
-
-
-    <scripts src="Tudo do bom/javas/app.js"></scripts>  
+      </div>
+      <button onclick="removeCart(${id})">🗑</button>
+    </div>`;
+  }).join("");
+  document.getElementById("cartTotal").textContent = "Total: R$ " + total.toFixed(2).replace('.',',');
+}
+function toggleCart(){
+  document.getElementById("cartDrawer").classList.toggle("open");
+  document.getElementById("overlay").classList.toggle("show");
+}
+function finalizarCompra(){
+  if(!Object.keys(carrinho).length){ alert("Adicione produtos ao carrinho primeiro!"); return; }
+  for(const k in carrinho) delete carrinho[k];
+  atualizarCart(); toggleCart();
+  document.getElementById("modal").classList.add("show");
+}
+function fecharModal(){ document.getElementById("modal").classList.remove("show"); }
+function goToProdutos(){
+  const termo = document.getElementById("searchInput").value;
+  navTo("produtos");
+  document.getElementById("searchInput2").value = termo;
+  renderProducts();
+}
+function navTo(page){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById("page-"+page).classList.add("active");
+  document.querySelectorAll(".nav-btn").forEach(b=>b.classList.toggle("active", b.dataset.page===page));
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+document.querySelectorAll(".nav-btn").forEach(b=>b.addEventListener("click",()=>navTo(b.dataset.page)));
+renderCategorias(); renderProducts(); renderDestaques(); atualizarCart();
+</script>
 </body>
 </html>
+src/routes/index.tsx
+export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Your App" },
+      { name: "description", content: "Replace this with a one-sentence description of your app." },
+      { property: "og:title", content: "Your App" },
+      { property: "og:description", content: "Replace this with a one-sentence description of your app." },
+      { title: "AgroFood - Do campo para sua mesa" },
+      { name: "description", content: "AgroFood: compre produtos agrícolas frescos direto do produtor. Frutas, legumes, verduras, grãos e laticínios com preço justo." },
+      { property: "og:title", content: "AgroFood - Do campo para sua mesa" },
+      { property: "og:description", content: "Produtos agrícolas frescos com entrega rápida e preço justo." },
+    ],
+  }),
+  component: Index,
+});
+// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
+function Index() {
+  return (
+    <div
+      className="flex min-h-screen items-center justify-center"
+      style={{ backgroundColor: "#fcfbf8" }}
+    >
+      <img
+        data-lovable-blank-page-placeholder="REMOVE_THIS"
+        src="https://cdn.gpteng.co/blank-app-v1.svg"
+        alt="Your app will live here!"
+      />
+    </div>
+    <iframe
+      src="/agrofood.html"
+      title="AgroFood"
+      style={{ width: "100vw", height: "100vh", border: "none", display: "block" }}
+    />
+  );
+}
