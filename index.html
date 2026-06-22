@@ -234,9 +234,9 @@ const produtos = [
   { id:15, nome:"Leite Integral", cat:"Laticínios", preco:5.80, img:"https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400" },
   { id:16, nome:"Queijo Fresco", cat:"Laticínios", preco:32.00, img:"https://images.unsplash.com/photo-1452195100486-9cc805987862?w=400" },
   { id:17, nome:"Ovos Caipira (dz)", cat:"Laticínios", preco:18.50, img:"https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?w=400" },
-  { id:18, nome:"Mel Puro", cat:"Naturais", preco:35.00, img:"https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=400" },
+  { id:18, nome:"Melancia", cat:"Fruta", preco:35.00, img:"https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=400" },
   { id:19, nome:"Manga", cat:"Frutas", preco:6.90, img:"https://images.unsplash.com/photo-1605027990121-cbae9e0642db?w=400" },
-  { id:20, nome:"Brócolis", cat:"Verduras", preco:7.50, img:"https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?w=400" },
+  { id:20, nome:"Brócolis", cat:"Verduras", preco:7.50, img:"https://www.estadao.com.br/resizer/v2/4SRSXOWLCBBYHHS3K67SPQNJVE.jpeg?quality=80&auth=996c71d759f88c7fd6fe3894a95f320a4b423b4f71317e8bda31563487f6b2d2&width=550&height=375&smart=true" },
 ];
 const carrinho = {};
 let categoriaAtiva = "Todas";
@@ -327,39 +327,5 @@ renderCategorias(); renderProducts(); renderDestaques(); atualizarCart();
 </script>
 </body>
 </html>
-src/routes/index.tsx
-export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Your App" },
-      { name: "description", content: "Replace this with a one-sentence description of your app." },
-      { property: "og:title", content: "Your App" },
-      { property: "og:description", content: "Replace this with a one-sentence description of your app." },
-      { title: "AgroFood - Do campo para sua mesa" },
-      { name: "description", content: "AgroFood: compre produtos agrícolas frescos direto do produtor. Frutas, legumes, verduras, grãos e laticínios com preço justo." },
-      { property: "og:title", content: "AgroFood - Do campo para sua mesa" },
-      { property: "og:description", content: "Produtos agrícolas frescos com entrega rápida e preço justo." },
-    ],
-  }),
-  component: Index,
-});
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-    <iframe
-      src="/agrofood.html"
-      title="AgroFood"
-      style={{ width: "100vw", height: "100vh", border: "none", display: "block" }}
-    />
-  );
-}
+
+    
