@@ -116,7 +116,6 @@ function navTo(page){
 
 document.querySelectorAll(".nav-btn").forEach(b=>b.addEventListener("click",()=>navTo(b.dataset.page)));
 
-// Iniciar a página com as informações já carregadas
 renderCategorias(); 
 renderProducts(); 
 renderDestaques(); 
