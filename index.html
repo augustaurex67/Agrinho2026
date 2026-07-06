@@ -8,6 +8,12 @@
   <script src="script.js" defer></script>
 </head>
 <body>
+  <div class="barra-acessibilidade" role="group" aria-label="Controles de acessibilidade">
+    <button onclick="alternarTema()" aria-label="Alternar para tema claro ou escuro">🌓 Tema</button>
+    <button onclick="mudarFonte(1)" aria-label="Aumentar tamanho da fonte">A+</button>
+    <button onclick="mudarFonte(-1)" aria-label="Diminuir tamanho da fonte">A-</button>
+  </div>
+
   <header>
     <div class="logo"><span>🌱</span> AgroFood</div>
     <nav>

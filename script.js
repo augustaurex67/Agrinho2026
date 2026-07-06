@@ -1,3 +1,20 @@
+// --- FUNCIONALIDADES DE ACESSIBILIDADE ---
+function alternarTema() {
+  document.body.classList.toggle('tema-escuro');
+}
+
+let tamanhoBase = 16;
+function mudarFonte(direcao) {
+  tamanhoBase += direcao * 2; 
+  // Limites para a fonte não ficar minúscula nem quebrar o layout
+  if (tamanhoBase < 14) tamanhoBase = 14;
+  if (tamanhoBase > 24) tamanhoBase = 24;
+  
+  // Alterando o font-size do <html> escala todo o site uniformemente
+  document.documentElement.style.fontSize = tamanhoBase + 'px';
+}
+
+// --- DADOS E LÓGICA DO AGROFOOD ---
 const produtos = [
   { id:1, nome:"Tomate", cat:"Frutas", preco:8.90, img:""},
   { id:2, nome:"Alface", cat:"Verduras", preco:4.50, img:"https://images.unsplash.com/photo-1622206151226-18ca2c9ab4a1?w=400" },
