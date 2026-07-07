@@ -1,6 +1,5 @@
 * { margin:0; padding:0; box-sizing:border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
 
-
 :root {
   --verde-escuro:#2e5d32;
   --verde:#4caf50;
@@ -11,7 +10,6 @@
   --texto:#2c2c2c;
   --fundo-card: #ffffff;
 }
-
 
 body.tema-escuro {
   --creme: #121212;
@@ -25,10 +23,14 @@ body {
   background: var(--creme); 
   color: var(--texto); 
   min-height:100vh;
-  transition: background-color 0.3s, color 0.3s;
+  transition: background-color 0.3s ease, color 0.3s ease, font-size 0.3s ease;
 }
 
-/* --- BARRA DE ACESSIBILIDADE --- */
+body *, body *::before, body *::after {
+  transition: font-size 0.3s ease, background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+
 .barra-acessibilidade {
   background: var(--verde-escuro);
   padding: 8px 24px;
@@ -56,7 +58,7 @@ body {
 }
 
 header {
-  background: linear-gradient(90deg, #2e5d32, #4caf50); /* Fixado para não sumir no tema escuro */
+  background: linear-gradient(90deg, #2e5d32, #4caf50); 
   color:#fff; padding:14px 24px; display:flex; align-items:center; justify-content:space-between;
   box-shadow:0 4px 12px rgba(0,0,0,.15); position:sticky; top:0; z-index:50;
 }
@@ -161,8 +163,8 @@ main { padding:24px; max-width:1200px; margin:0 auto; }
 .info-box h2 { color:var(--verde-escuro); margin-bottom:14px; }
 .info-box p { margin-bottom:12px; line-height:1.7; }
 .contato-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap:16px; margin-top:20px; }
-.contato-card { background: var(--verde-claro); padding:18px; border-radius:12px; color: #2c2c2c; }
-.contato-card strong { color: #2e5d32; display:block; margin-bottom:4px; }
+.contato-card { background: var(--verde-claro); padding:18px; border-radius:12px; color: var(--texto); }
+.contato-card strong { color: var(--verde-escuro); display:block; margin-bottom:4px; }
 .modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:200; align-items:center; justify-content:center; }
 .modal.show { display:flex; animation: fade .3s ease; }
 .modal-content { background:var(--fundo-card); padding:30px; border-radius:14px; text-align:center; max-width:400px; transition: background-color 0.3s; }
