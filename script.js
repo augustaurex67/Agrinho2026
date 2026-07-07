@@ -16,7 +16,7 @@ function mudarFonte(direcao) {
 
 // --- DADOS E LÓGICA DO AGROFOOD ---
 const produtos = [
-  { id:1, nome:"Tomate", cat:"Frutas", preco:8.90, img:""},
+  { id:1, nome:"Tomate", cat:"Frutas", preco:8.90, img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStdsWTbaTDWL3JTn97_9Zk-Pglol57dh_WeHE1V7r_Kg&s=10"},
   { id:2, nome:"Alface", cat:"Verduras", preco:4.50, img:"https://images.unsplash.com/photo-1622206151226-18ca2c9ab4a1?w=400" },
   { id:3, nome:"Cenoura", cat:"Legumes", preco:5.20, img:"https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=400" },
   { id:4, nome:"Batata", cat:"Legumes", preco:6.80, img:"https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=400" },
